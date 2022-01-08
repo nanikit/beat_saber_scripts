@@ -1,0 +1,208 @@
+{
+  "id": "1694f",
+  "name": "Ringed Genesis [90°/360°][R]",
+  "description": "[Ranked]\nFinally its done. and now rankable!\n\nThis map was 100% a learning process but i think i understand how to make a good 90° and 360° now.\n\nI hope this map is fun and shows what a 90° map really can be, i strongly think that they could be a future that we will be part of in this game. (Hence why i named the 90° diff what I did)\n\nAlso rankable 8 star diff and lower cuz i can :)\n\nReupload #2\n-Fixed dd at end of 360\n-Fixed this weird 180 degree in exp+\n\nIf anyone has any feedback to better this map DM me @That_Narwhal#0420 on discord <3",
+  "uploader": {
+    "id": 72110,
+    "name": "that_narwhal",
+    "uniqueSet": true,
+    "hash": "5d52cb573828d50006e3a2b5",
+    "avatar": "https://cdn.beatsaver.com/avatar/336663714801385472.png",
+    "type": "DISCORD"
+  },
+  "metadata": {
+    "bpm": 160.0,
+    "duration": 136,
+    "songName": "Ringed Genesis",
+    "songSubName": "",
+    "songAuthorName": "Edelritter",
+    "levelAuthorName": "That_Narwhal"
+  },
+  "stats": {
+    "plays": 0,
+    "downloads": 0,
+    "upvotes": 923,
+    "downvotes": 61,
+    "score": 0.883
+  },
+  "uploaded": "2021-04-12T01:36:21.489Z",
+  "automapper": false,
+  "ranked": true,
+  "qualified": false,
+  "versions": [
+    {
+      "hash": "39ea1c7f8ecf7f927e2acd072378bc08c94f230a",
+      "key": "1694f",
+      "state": "Published",
+      "createdAt": "2021-04-12T01:36:21.489Z",
+      "sageScore": 6,
+      "diffs": [
+        {
+          "njs": 12.0,
+          "offset": -1.1,
+          "notes": 206,
+          "bombs": 65,
+          "obstacles": 192,
+          "nps": 1.741,
+          "length": 315.5,
+          "characteristic": "Standard",
+          "difficulty": "Easy",
+          "events": 3294,
+          "chroma": false,
+          "me": false,
+          "ne": false,
+          "cinema": false,
+          "seconds": 118.312,
+          "paritySummary": {
+            "errors": 23,
+            "warns": 0,
+            "resets": 3
+          },
+          "stars": 1.14
+        },
+        {
+          "njs": 14.0,
+          "offset": 0.4,
+          "notes": 380,
+          "bombs": 60,
+          "obstacles": 65,
+          "nps": 2.985,
+          "length": 339.5,
+          "characteristic": "Standard",
+          "difficulty": "Normal",
+          "events": 3294,
+          "chroma": false,
+          "me": false,
+          "ne": false,
+          "cinema": false,
+          "seconds": 127.312,
+          "paritySummary": {
+            "errors": 0,
+            "warns": 1,
+            "resets": 4
+          },
+          "stars": 1.87
+        },
+        {
+          "njs": 16.0,
+          "offset": 0.0,
+          "notes": 569,
+          "bombs": 42,
+          "obstacles": 86,
+          "nps": 4.469,
+          "length": 339.5,
+          "characteristic": "Standard",
+          "difficulty": "Hard",
+          "events": 3294,
+          "chroma": false,
+          "me": false,
+          "ne": false,
+          "cinema": false,
+          "seconds": 127.312,
+          "paritySummary": {
+            "errors": 0,
+            "warns": 0,
+            "resets": 0
+          },
+          "stars": 3.12
+        },
+        {
+          "njs": 18.0,
+          "offset": -0.25,
+          "notes": 747,
+          "bombs": 67,
+          "obstacles": 56,
+          "nps": 5.867,
+          "length": 339.5,
+          "characteristic": "Standard",
+          "difficulty": "Expert",
+          "events": 3294,
+          "chroma": false,
+          "me": false,
+          "ne": false,
+          "cinema": false,
+          "seconds": 127.312,
+          "paritySummary": {
+            "errors": 0,
+            "warns": 0,
+            "resets": 18
+          },
+          "stars": 5.29
+        },
+        {
+          "njs": 20.0,
+          "offset": -0.5,
+          "notes": 870,
+          "bombs": 61,
+          "obstacles": 55,
+          "nps": 6.834,
+          "length": 339.5,
+          "characteristic": "Standard",
+          "difficulty": "ExpertPlus",
+          "events": 3302,
+          "chroma": false,
+          "me": false,
+          "ne": false,
+          "cinema": false,
+          "seconds": 127.312,
+          "paritySummary": {
+            "errors": 4,
+            "warns": 15,
+            "resets": 4
+          },
+          "stars": 8.47
+        },
+        {
+          "njs": 19.0,
+          "offset": -0.3,
+          "notes": 884,
+          "bombs": 210,
+          "obstacles": 107,
+          "nps": 6.808,
+          "length": 346.25,
+          "characteristic": "90Degree",
+          "difficulty": "ExpertPlus",
+          "events": 4292,
+          "chroma": false,
+          "me": false,
+          "ne": false,
+          "cinema": false,
+          "seconds": 129.844,
+          "paritySummary": {
+            "errors": 0,
+            "warns": 0,
+            "resets": 50
+          }
+        },
+        {
+          "njs": 19.0,
+          "offset": -0.25,
+          "notes": 914,
+          "bombs": 194,
+          "obstacles": 111,
+          "nps": 7.254,
+          "length": 336.0,
+          "characteristic": "360Degree",
+          "difficulty": "ExpertPlus",
+          "events": 4297,
+          "chroma": false,
+          "me": false,
+          "ne": false,
+          "cinema": false,
+          "seconds": 126.0,
+          "paritySummary": {
+            "errors": 0,
+            "warns": 0,
+            "resets": 50
+          }
+        }
+      ],
+      "downloadURL": "https://as.cdn.beatsaver.com/39ea1c7f8ecf7f927e2acd072378bc08c94f230a.zip",
+      "coverURL": "https://as.cdn.beatsaver.com/39ea1c7f8ecf7f927e2acd072378bc08c94f230a.jpg",
+      "previewURL": "https://as.cdn.beatsaver.com/39ea1c7f8ecf7f927e2acd072378bc08c94f230a.mp3"
+    }
+  ],
+  "createdAt": "2021-04-12T01:36:21.489Z",
+  "updatedAt": "2021-04-12T01:36:21.489Z",
+  "lastPublishedAt": "2021-04-12T01:36:21.489Z"
+}
