@@ -1,6 +1,9 @@
-import { getMapFromHash } from "./src/beatsaver.ts";
-import { getHashFromQuestName, makeBeatsaverDirectory } from "./src/renamer.ts";
-import { parse } from "./deps.ts";
+import { getMapFromHash } from "../src/beatsaver.ts";
+import {
+  getHashFromQuestName,
+  makeBeatsaverDirectory,
+} from "../src/renamer.ts";
+import { parse } from "../deps.ts";
 
 const rename = async (path: string) => {
   const hash = getHashFromQuestName(path);
