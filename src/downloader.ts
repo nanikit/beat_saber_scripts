@@ -10,8 +10,8 @@ const downloadLatest = async (
   let response = await fetch(getDetailUrlFromId(id));
   const json = await response.json() as BeatsaverMap;
   const { versions } = json;
-  if (versions.length !== 1) {
-    throw new Error(`not sole version: ${id}`);
+  if (versions?.length !== 1) {
+    throw new Error(`${id} has not sole version: ${JSON.stringify(json)}`);
   }
 
   const url = versions![0].downloadURL;
