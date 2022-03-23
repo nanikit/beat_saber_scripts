@@ -6,7 +6,7 @@ const downloadLatest = async (
   { fetch }: {
     fetch: typeof self.fetch;
   },
-): Promise<{ name: string; blob: Blob }> => {
+): Promise<{ name: string; arrayBuffer: ArrayBuffer }> => {
   let response = await fetch(getDetailUrlFromId(id));
   const json = await response.json() as BeatsaverMap;
   const { versions } = json;
@@ -19,16 +19,15 @@ const downloadLatest = async (
   const disposition = response.headers.get("content-disposition");
   let name = disposition!.match(/filename="(.*?)"/)![1];
   name = name.replace(/\?/g, "_");
-  const blob = await response.blob();
+  const arrayBuffer = await response.arrayBuffer();
 
-  return { name, blob };
+  return { name, arrayBuffer };
 };
 
 export async function* downloadAll(
   ids: string,
   { fetch: realFetch }: {
     fetch?: typeof self.fetch;
-    log?: typeof console.log;
   },
 ) {
   const fetch = realFetch ?? self.fetch;
@@ -38,18 +37,24 @@ export async function* downloadAll(
 
   const limiter = limitParallelism(3);
   let tasks = extractedIds.map((id) =>
-    limiter(() => downloadLatest(id, { fetch }))
+    limiter(async () => {
+      try {
+        return await downloadLatest(id, { fetch });
+      } catch (error) {
+        throw new Error(`id ${id} download failure`, { cause: error });
+      }
+    })
   );
 
   while (tasks.length > 0) {
-    let completePromise: Promise<unknown>;
+    let completePromise: ReturnType<typeof downloadLatest>;
     try {
       [completePromise] = await Promise.race(
         tasks.map((promise) => promise.then(() => [promise], () => [promise])),
       );
       yield completePromise;
     } catch (error) {
-      yield error;
+      yield error as Error;
     } finally {
       tasks = tasks.filter((x) => x !== completePromise);
     }
