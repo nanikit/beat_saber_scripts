@@ -71,3 +71,7 @@ export const getMapFromHash = async (hash: string): Promise<BeatsaverMap> => {
   const response = await fetch(`https://beatsaver.com/api/maps/hash/${hash}`);
   return response.json();
 };
+
+export const getDetailUrlFromId = (id: string): string => {
+  return `https://beatsaver.com/api/maps/id/${id}`;
+};
