@@ -11,7 +11,7 @@ const main = async () => {
 
   for await (const errorOrFile of downloadAll(idText, { fetch })) {
     if (errorOrFile instanceof Error) {
-      console.log(`${errorOrFile}`);
+      console.log(`${errorOrFile} ${errorOrFile?.cause}`);
     } else {
       const { name, arrayBuffer } = errorOrFile;
       await Deno.writeFile(name, new Uint8Array(arrayBuffer));
