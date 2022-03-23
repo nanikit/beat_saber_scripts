@@ -27,9 +27,6 @@ Deno.test("Given 3 normal and 1 error maps", async (test) => {
 
         const tag = info[id as keyof typeof info];
         return {
-          headers: {
-            get: () => `attachment; filename="${id} (name? - author).zip"`,
-          },
           json: () => ({
             id,
             versions: [{ downloadURL: tag }],
