@@ -4,7 +4,7 @@ const main = async () => {
   const paths = Deno.args;
 
   if (paths.length === 0) {
-    console.log(`usage: deno ${Deno.mainModule} <ids.txt>`);
+    console.log(`usage: deno run -A ${Deno.mainModule} <ids.txt>`);
   }
 
   const idText = await Deno.readTextFile(Deno.args[0]);

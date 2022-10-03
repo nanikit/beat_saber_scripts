@@ -1,5 +1,5 @@
 import { limitParallelism } from "../deps.ts";
-import { BeatsaverMap, getDetailUrlFromId } from "./beatsaver.ts";
+import { getDetailFromId } from "./beatsaver.ts";
 
 const getSafeFileName = (name: string) => {
   // deno-lint-ignore no-control-regex
@@ -12,15 +12,14 @@ const downloadLatest = async (
     fetch: typeof self.fetch;
   },
 ): Promise<{ name: string; arrayBuffer: ArrayBuffer }> => {
-  let response = await fetch(getDetailUrlFromId(id));
-  const json = await response.json() as BeatsaverMap;
+  const json = await getDetailFromId(id);
   const { metadata, versions } = json;
   if (versions?.length !== 1) {
     throw new Error(`${id} has not sole version: ${JSON.stringify(json)}`);
   }
 
   const url = versions![0].downloadURL;
-  response = await fetch(url);
+  const response = await fetch(url);
   const { songName, levelAuthorName } = metadata;
   let name = `${id} (${songName} - ${levelAuthorName}).zip`;
   name = getSafeFileName(name);
