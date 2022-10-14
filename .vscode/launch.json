@@ -7,12 +7,12 @@
     {
       "request": "launch",
       "name": "Launch Program",
-      "type": "pwa-node",
+      "type": "node",
       "program": "${file}",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "C:\\ProgramData\\chocolatey\\bin\\deno.EXE",
       "runtimeArgs": [
-        "test",
+        "run",
         "--unstable",
         "--inspect-brk",
         "--allow-all"
