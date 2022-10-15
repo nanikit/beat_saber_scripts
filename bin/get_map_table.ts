@@ -7,17 +7,39 @@ type Row = { id: string; difficulty?: string; kind: string };
 
 async function main() {
   const text = await Deno.readTextFile("ids.txt");
-  const table = text.replaceAll("\r", "").split("\n").map((x) => x.split("\t"));
+  const table = text.replaceAll("\r", "").split("\n");
   await Deno.mkdir("details", { recursive: true });
 
   const tableFile = "kbsl3_list.md";
   await Deno.writeFile(tableFile, new Uint8Array());
 
-  table.push(["", "", "", "", "/000"]);
   let previousKind = "";
   const rows = [] as Row[];
+  let cover: string | undefined;
+  let title: string | undefined;
+  let fileName: string | undefined;
+  table.push("\t\t\t\t/00");
   for (const row of table) {
-    const [kind, _phase, _title, difficulty, url] = row;
+    if (row.trim() === "") {
+      continue;
+    }
+    if (row.startsWith("title:")) {
+      title = row.replace("title:", "").trim();
+      continue;
+    }
+    if (row.startsWith("name:")) {
+      fileName = row.replace("name:", "").trim();
+      continue;
+    }
+    if (row.startsWith("cover:")) {
+      const path = row.replace("cover:", "").trim();
+      const file = await Deno.readFile(path);
+      cover = await uint8ArrayToDataUrl(file);
+      cover = cover.replace("data:application/octet-stream;", "");
+      continue;
+    }
+
+    const [kind, _phase, _title, difficulty, url] = row.split("\t");
     if (kind !== previousKind && rows.length) {
       const details = await findDetails(rows.map((row) => row.id));
       const [table, list] = getPlaylist(
@@ -26,22 +48,41 @@ async function main() {
           difficulty: r.difficulty,
         })),
       );
-      (list as any).playlistTitle = `KBSL3 ${previousKind} draft`;
+      (list as any).playlistTitle = title ?? `KBSL3 ${previousKind} draft`;
+      title = undefined;
+      if (cover) {
+        (list as any).image = cover;
+        cover = undefined;
+      }
       await Deno.writeTextFile(
-        `kbsl3_${rows[0].kind}.json`,
+        fileName ?? `kbsl3_${rows[0].kind}.json`,
         JSON.stringify(list, null, 2),
       );
+      fileName = undefined;
+
       const text = await Deno.readTextFile(tableFile);
       await Deno.writeTextFile(tableFile, `${text}\n\n${table}`);
       rows.splice(0, rows.length);
+    } else {
+      const id = (url as string).match(/\/(\w+)$/)![1];
+      rows.push({ id, difficulty, kind });
+      previousKind = kind;
     }
-    const id = (url as string).match(/\/(\w+)$/)![1];
-    rows.push({ id, difficulty, kind });
-    previousKind = row[0];
   }
 
   console.log("finish");
 }
+const uint8ArrayToDataUrl = async (data: Uint8Array) => {
+  const dataUrl = await new Promise<string>((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.readAsDataURL(new Blob([data]));
+  });
+  /*
+  "data:application/octet-stream;base64,<your base64 data>",
+  */
+  return dataUrl;
+};
 
 function getPlaylist(maps: { detail: BeatsaverMap; difficulty?: string }[]) {
   for (const map of maps) {

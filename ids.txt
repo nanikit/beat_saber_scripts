@@ -1,85 +1,12 @@
-TECH	3.4위전	Expert+	https://beatsaver.com/maps/2830e
-TECH	결승	Expert+	https://beatsaver.com/maps/2960b
-TECH	결승	Expert+	https://beatsaver.com/maps/2980f
-TECH	결승	Expert+	https://beatsaver.com/maps/25535
-TECH	결승	Expert+	https://beatsaver.com/maps/24ff3
-TECH	결승	Expert+	https://beatsaver.com/maps/23cc3
-TECH	결승	Expert+	https://beatsaver.com/maps/24465
-TECH	결승	Expert+	https://beatsaver.com/maps/7983
-TECH		Expert+	https://beatsaver.com/maps/19cb4
-TECH		Expert+	https://beatsaver.com/maps/273da
-TECH		Expert+	https://beatsaver.com/maps/23ad5
-TECH		Expert	https://beatsaver.com/maps/2473c
-TECH		Expert	https://beatsaver.com/maps/25506
-TECH		Expert	https://beatsaver.com/maps/28da1
-TECH		Expert+	https://beatsaver.com/maps/29ec2
-TECH		Expert+	https://beatsaver.com/maps/2a69f
-ACC	3.4위전	Expert	https://www.beatsaver.com/maps/75e0
-ACC	3.4위전	Expert+	https://beatsaver.com/maps/29fac
-ACC	3.4위전	Expert	https://beatsaver.com/maps/29e1a
-ACC	3.4위전	Expert+	https://beatsaver.com/maps/25a37
-ACC	3.4위전	Expert+	https://beatsaver.com/maps/261fc
-ACC	3.4위전	Hard	https://beatsaver.com/maps/2997d
-ACC	3.4위전	Expert	https://beatsaver.com/maps/251b8
-ACC	3.4위전	Expert+	https://beatsaver.com/maps/29a17
-ACC	3.4위전 타이브레이커	Hard	https://www.beatsaver.com/maps/78a8
-ACC	결승	Normal	https://www.beatsaver.com/maps/14427
-ACC	결승	Expert+	https://www.beatsaver.com/maps/18d1d
-ACC	결승	Expert+	https://beatsaver.com/maps/26826
-ACC	결승	Expert+	https://beatsaver.com/maps/291ba
-ACC	결승	Expert	https://beatsaver.com/maps/1d3f5
-ACC	결승	Expert+	https://beatsaver.com/maps/27ce6
-ACC	결승	Hard	https://beatsaver.com/maps/2881d
-ACC	결승	Expert+	https://beatsaver.com/maps/28ae3
-ACC	결승 타이브레이커	Expert+	https://beatsaver.com/maps/27ef3
-ACC		Expert	https://beatsaver.com/maps/15111
-SPEED	결승	Expert+	https://beatsaver.com/maps/2868b
-SPEED	결승	Expert+	https://beatsaver.com/maps/29245
-SPEED	결승	Expert+	https://beatsaver.com/maps/2a25b
-SPEED	결승	Expert+	https://beatsaver.com/maps/14513
-SPEED	결승	Expert+	https://beatsaver.com/maps/2a69c
-SPEED	결승	Expert+	https://beatsaver.com/maps/2a1b3
-SPEED	결승	Expert+	https://beatsaver.com/maps/2367e
-SPEED	결승	Expert+	https://beatsaver.com/maps/23cac
-SPEED	결승	Expert+	https://beatsaver.com/maps/282f3
-SPEED	결승	Expert+	https://beatsaver.com/maps/22845
-SPEED	결승 타이브레이커	Expert+	https://beatsaver.com/maps/26c47
-SPEED		Expert+	https://beatsaver.com/maps/1bc83
-SPEED		Expert+	https://beatsaver.com/maps/25367
-시니어	3.4위전	Hard	https://www.beatsaver.com/maps/19059
-시니어	3.4위전	Expert+	https://www.beatsaver.com/maps/1acb3
-시니어	3.4위전	Expert	https://www.beatsaver.com/maps/11c74
-시니어	3.4위전	Expert	https://www.beatsaver.com/maps/9c17
-시니어	3.4위전	Hard	https://www.beatsaver.com/maps/9fba
-시니어	3.4위전	Hard	https://www.beatsaver.com/maps/17a70
-시니어	3.4위전	Expert+	https://beatsaver.com/maps/acfa
-시니어	3.4위전	Expert+	https://beatsaver.com/maps/23806
-시니어	3.4위전 타이브레이커	Expert	https://www.beatsaver.com/maps/bd6a
-시니어	결승	Expert	https://www.beatsaver.com/maps/25671
-시니어	결승	Normal	https://www.beatsaver.com/maps/27bae
-시니어	결승	Expert	https://www.beatsaver.com/maps/202d2
-시니어	결승	Expert+	https://beatsaver.com/maps/25bd0
-시니어	결승	Expert+	https://beatsaver.com/maps/27c90
-시니어	결승	Expert+	https://beatsaver.com/maps/27309
-시니어	결승	Expert+	https://beatsaver.com/maps/26d33
-시니어	결승	Expert	https://beatsaver.com/maps/28869
-시니어	결승 타이브레이커	Expert	https://www.beatsaver.com/maps/ba40
-시니어	보류	Expert+	https://beatsaver.com/maps/265f9
-시니어	보류	Expert+	https://beatsaver.com/maps/16518
-시니어	보류	Expert	https://beatsaver.com/maps/1bb75
-시니어	보류	Expert	https://beatsaver.com/maps/76cc
-시니어		Expert+	https://beatsaver.com/maps/21960
-시니어		Expert+	https://beatsaver.com/maps/21489
-시니어		Expert	https://beatsaver.com/maps/293d9
-시니어		Expert+	https://beatsaver.com/maps/252ef
-주니어	2경기	Hard	https://beatsaver.com/maps/2a148
-주니어	2경기	Hard	https://beatsaver.com/maps/1cdfc
-주니어	2경기	Normal	https://beatsaver.com/maps/2698d
-주니어	2경기	Easy	https://beatsaver.com/maps/25540
-주니어	2경기 타이브레이커	Expert	https://beatsaver.com/maps/dc3e
-주니어	3경기	Normal	https://beatsaver.com/maps/2a793
-주니어	3경기	Normal	https://beatsaver.com/maps/1b890
-주니어	3경기	Hard	https://beatsaver.com/maps/2a669
-주니어	3경기	Normal	https://beatsaver.com/maps/c209
-주니어	3경기 타이브레이커	Easy	https://beatsaver.com/maps/29d32
-주니어		Hard	https://beatsaver.com/maps/20cc1
+TECH	4강	Suzuya but it's better	Expert+	https://beatsaver.com/maps/954e
+TECH	4강	KARUT - Connected Sky	Expert+	https://beatsaver.com/maps/2964b
+TECH	4강	umu. - humanly	Expert+	https://beatsaver.com/maps/1967e
+TECH	4강	Camellia & USAO - Möbius [In Ranked Queue]	Expert+	https://beatsaver.com/maps/2a2ef
+TECH	4강	TANO*C Sound Team - BATTLE NO.1	Expert+	https://beatsaver.com/maps/25d61
+TECH	4강	M2U & NICODE - Lune	Expert+	https://beatsaver.com/maps/26b4c
+TECH	4강	Future Downloader	Expert+	https://beatsaver.com/maps/29b36
+TECH	4강	Camellia - Circles of Death	Expert+	https://beatsaver.com/maps/282fa
+TECH	4강 타이브레이커	[Challenge] Juggernaut. - Valhalla:0	Expert+	https://beatsaver.com/maps/2692c
+name: kbsl3_tech_semifinal.json
+title: KBSL3 TECH Semifinal
+cover: D:\Game\beatsaber\backup\Beat Saber\Playlists\CoverImages\tech_4.png
