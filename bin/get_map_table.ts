@@ -13,11 +13,12 @@ async function main() {
   const tableFile = "kbsl3_list.md";
   await Deno.writeFile(tableFile, new Uint8Array());
 
-  table.push(["", "", "", "/000"]);
-  let kind = "";
+  table.push(["", "", "", "", "/000"]);
+  let previousKind = "";
   const rows = [] as Row[];
   for (const row of table) {
-    if (row[0] !== kind && rows.length) {
+    const [kind, _phase, _title, difficulty, url] = row;
+    if (kind !== previousKind && rows.length) {
       const details = await findDetails(rows.map((row) => row.id));
       const [table, list] = getPlaylist(
         rows.map((r, index) => ({
@@ -25,7 +26,7 @@ async function main() {
           difficulty: r.difficulty,
         })),
       );
-      (list as any).playlistTitle = `KBSL3 ${kind} draft`;
+      (list as any).playlistTitle = `KBSL3 ${previousKind} draft`;
       await Deno.writeTextFile(
         `kbsl3_${rows[0].kind}.json`,
         JSON.stringify(list, null, 2),
@@ -34,9 +35,9 @@ async function main() {
       await Deno.writeTextFile(tableFile, `${text}\n\n${table}`);
       rows.splice(0, rows.length);
     }
-    const id = (row[3] as string).match(/\/(\w+)$/)![1];
-    rows.push({ id, difficulty: row[2], kind: row[0] });
-    kind = row[0];
+    const id = (url as string).match(/\/(\w+)$/)![1];
+    rows.push({ id, difficulty, kind });
+    previousKind = row[0];
   }
 
   console.log("finish");
