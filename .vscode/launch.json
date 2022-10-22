@@ -11,12 +11,7 @@
       "program": "${file}",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
-      "runtimeArgs": [
-        "run",
-        "--unstable",
-        "--inspect-brk",
-        "--allow-all"
-      ],
+      "runtimeArgs": ["run", "--unstable", "--inspect-brk", "--allow-all"],
       "attachSimplePort": 9229
     }
   ]

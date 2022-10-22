@@ -95,7 +95,7 @@ function getPlaylist(maps: { detail: BeatsaverMap; difficulty?: string }[]) {
 
   const table = maps.map(({ detail }, index) =>
     [
-      detail.name,
+      detail.metadata.songName,
       detail.metadata.songAuthorName,
       detail.metadata.levelAuthorName,
       maps[index].difficulty,
@@ -114,7 +114,7 @@ function getPlaylist(maps: { detail: BeatsaverMap; difficulty?: string }[]) {
         AllowDuplicates: false,
       },
       songs: maps.map(({ detail, difficulty }) => ({
-        songName: detail.name,
+        songName: detail.metadata.songName,
         levelAuthorName: detail.metadata.levelAuthorName,
         hash: detail.versions[0].hash,
         levelid: `custom_level_${detail.versions[0].hash}`,
