@@ -63,11 +63,10 @@ async function main() {
       const text = await Deno.readTextFile(tableFile);
       await Deno.writeTextFile(tableFile, `${text}\n\n${table}`);
       rows.splice(0, rows.length);
-    } else {
-      const id = (url as string).match(/\/(\w+)$/)![1];
-      rows.push({ id, difficulty, kind });
-      previousKind = kind;
     }
+    previousKind = kind;
+    const id = (url as string).match(/\/(\w+)$/)![1];
+    rows.push({ id, difficulty, kind });
   }
 
   console.log("finish");
