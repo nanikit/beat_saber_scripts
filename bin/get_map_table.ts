@@ -20,7 +20,7 @@ async function main() {
   let fileName: string | undefined;
   table.push("\t\t\t\t/00");
   for (const row of table) {
-    if (row.trim() === "") {
+    if (row.trim() === "" || row.startsWith("#")) {
       continue;
     }
     if (row.startsWith("title:")) {

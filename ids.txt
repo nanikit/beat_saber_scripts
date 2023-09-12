@@ -1,12 +1,74 @@
-TECH	4강	Suzuya but it's better	Expert+	https://beatsaver.com/maps/954e
-TECH	4강	KARUT - Connected Sky	Expert+	https://beatsaver.com/maps/2964b
-TECH	4강	umu. - humanly	Expert+	https://beatsaver.com/maps/1967e
-TECH	4강	Camellia & USAO - Möbius [In Ranked Queue]	Expert+	https://beatsaver.com/maps/2a2ef
-TECH	4강	TANO*C Sound Team - BATTLE NO.1	Expert+	https://beatsaver.com/maps/25d61
-TECH	4강	M2U & NICODE - Lune	Expert+	https://beatsaver.com/maps/26b4c
-TECH	4강	Future Downloader	Expert+	https://beatsaver.com/maps/29b36
-TECH	4강	Camellia - Circles of Death	Expert+	https://beatsaver.com/maps/282fa
-TECH	4강 타이브레이커	[Challenge] Juggernaut. - Valhalla:0	Expert+	https://beatsaver.com/maps/2692c
-name: kbsl3_tech_semifinal.json
-title: KBSL3 TECH Semifinal
-cover: D:\Game\beatsaber\backup\Beat Saber\Playlists\CoverImages\tech_4.png
+TECH	결승	MOMOIRO CLOVER Z - SANTA SAN	Expert+	https://beatsaver.com/maps/7983
+TECH	결승	Camellia - Toxic Violet Cubes	Expert+	https://beatsaver.com/maps/1c118
+TECH	결승	LindaAI-CUE - SAITAMA 2000	Expert+	https://beatsaver.com/maps/23cc3
+TECH	결승	[Ranked] [RW2H] MisoilePunch - MixxioN	Expert+	https://beatsaver.com/maps/24465
+TECH	결승	The 4th - Force of Quartz	Expert+	https://beatsaver.com/maps/24ff3
+TECH	결승	Camellia - Quicksand	Expert+	https://beatsaver.com/maps/25535
+TECH	결승	Mitsukiyo - Unwelcome School	Expert+	https://beatsaver.com/maps/2960b
+TECH	결승	Nothing But Requiem with Museo - Pentiment	Expert+	https://beatsaver.com/maps/2980f
+TECH	결승	Team Grimoire vs Sakuzyo vs Laur - Arcana Eden	Expert+	https://beatsaver.com/maps/298a5
+TECH	결승,선수1 픽	Rebellio - BEMANI （speed FIXed）	Expert+	https://beatsaver.com/maps/1a39
+TECH	결승,선수2 픽	INTERNET OVERDOSE	Expert+	https://beatsaver.com/maps/276a2
+name: kbsl3_tech_final.json
+title: KBSL3 TECH Final
+cover: D:\Game\beatsaber\backup\Beat Saber\Playlists\CoverImages\tech_final.png
+
+ACC	결승	[RANKED] Camellia - Night Raid with a Dragon	Expert	https://beatsaver.com/maps/1d3f5
+ACC	결승	LE SSERAFIM - FEARLESS (Such Cover) (Chroma)	Expert+	https://beatsaver.com/maps/26826
+ACC	결승	Kairiki Bear - Iya Girl	Expert+	https://beatsaver.com/maps/27ce6
+ACC	결승	Mikansei Monologue - Carmen	Hard	https://beatsaver.com/maps/2881d
+ACC	결승 타이브레이커	Yooh - Enter The Fire	Expert+	https://beatsaver.com/maps/27ef3
+ACC	결승	[Qumu Pack] New Donk City (Metro Kingdom) (Qumu Remix)	Expert+	https://beatsaver.com/maps/28ae3
+ACC	결승	Late Night Talking - Harry Styles	Expert+	https://beatsaver.com/maps/291ba
+ACC	결승	Kingslayer (feat. BABYMETAL) - Bring Me The Horizon	Normal	https://www.beatsaver.com/maps/14427
+ACC	결승	Kiss Me More - Doja Cat (Ft. SZA)	Expert+	https://www.beatsaver.com/maps/18d1d
+ACC	결승,선수1 픽	FWLR - Existentia	Expert+	https://beatsaver.com/maps/26503
+ACC	결승,선수2 픽	All Time Low - Heroes	Easy	https://beatsaver.com/maps/167e0
+name: kbsl3_acc_final.json
+title: KBSL3 ACC Final
+cover: D:\Game\beatsaber\backup\Beat Saber\Playlists\CoverImages\acc_final.png
+
+SPEED	결승	[Ranked]Camellia - Dyscontrolled Galaxy	Expert+	https://beatsaver.com/maps/14513
+SPEED	결승	RiraN - Ready For The Madness	Expert+	https://beatsaver.com/maps/2367e
+SPEED	결승	[MEGARELEASE] Kaneko Chiharu - iLLness LiLin	Expert+	https://beatsaver.com/maps/282f3
+SPEED	결승	Xyris - MECHANiCLYSM	Expert+	https://beatsaver.com/maps/2868b
+SPEED	결승 타이브레이커	[후원자맵풀] RoughSketch ft. aikapin - Grimm (Kobaryo's FTN-Remix)	Expert+	https://beatsaver.com/maps/26c47
+SPEED	결승	Kobaryo - Galaxy Friends(from Arcaea)	Expert+	https://beatsaver.com/maps/29245
+SPEED	결승	(BL Ranking) Infant Annihilator - II. Anal Prolapse Suffocation	Expert+	https://beatsaver.com/maps/2a1b3
+SPEED	결승	coltrane - zeke didn't "invent dariacore", i did	Expert+	https://beatsaver.com/maps/2a25b
+SPEED	결승	Laur - Attractor Dimension	Expert+	https://beatsaver.com/maps/2a69c
+SPEED	결승,선수1 픽	RoughSketch - 666	Expert+	https://beatsaver.com/maps/12bd2
+SPEED	결승,선수2 픽	Yooh - Ice Angel (1.25x)	Expert+	https://beatsaver.com/maps/4e5a
+name: kbsl3_speed_final.json
+title: KBSL3 SPEED Final
+cover: D:\Game\beatsaber\backup\Beat Saber\Playlists\CoverImages\speed_final.png
+
+시니어	결승	Android Girl - DECO*27 (feat. Hatsune Miku)	Expert+	https://beatsaver.com/maps/25bd0
+시니어	결승	[Q - Chroma] Hakui Koyori - WAO!!	Expert+	https://beatsaver.com/maps/26d33
+시니어	결승	Garakuta Doll Play (Tanger Remix)	Expert+	https://beatsaver.com/maps/27309
+시니어	결승	 Miracle - Andora ft. Youi	Expert+	https://beatsaver.com/maps/27c90
+시니어	결승 타이브레이커	Chocolate Lily - Kobaryo	Expert	https://www.beatsaver.com/maps/ba40
+시니어	결승	t+pazolite - monochrome dream	Expert	https://beatsaver.com/maps/28869
+시니어	결승	P*Light - Clip it Bro [Ranked]	Expert	https://www.beatsaver.com/maps/202d2
+시니어	결승	YURUSHITE (Uncut Edition) - t+pazolite	Expert	https://www.beatsaver.com/maps/25671
+시니어	결승	When I Use it - Buster Nalmi	Normal	https://www.beatsaver.com/maps/27bae
+시니어	결승,선수1 픽	Feint - Tower Of Heaven (You Are Slaves) V2	Expert+	https://beatsaver.com/maps/17f9
+시니어	결승,선수2 픽	Blue Archive - Unwelcome School (Mitsukiyo)	Expert+	https://beatsaver.com/maps/1fc88
+name: kbsl3_senior_final.json
+title: KBSL3 Senior Final
+cover: D:\Game\beatsaber\backup\Beat Saber\Playlists\CoverImages\senior_final.png
+
+주니어	3경기,선수1 픽	Chururira Chururira Daddadda!	Hard	https://beatsaver.com/maps/18bf
+주니어	3경기	[Alphabeat - Pegboard Nerds Pack] Pegboard Nerds - Luigi's Mansion	Expert	https://beatsaver.com/maps/c209
+주니어	3경기,선수2 픽	IVE - After LIKE	Expert	https://beatsaver.com/maps/29296
+주니어	3경기,선수1 픽	Horang Pungryuga	Expert	https://beatsaver.com/maps/8cd9
+주니어	3경기	DECO*27 - Cinderella feat. Hatsune Miku	Hard	https://beatsaver.com/maps/1b890
+주니어	3경기,선수2 픽	Dreamcatcher - Scream	Expert	https://beatsaver.com/maps/8d49
+주니어	3경기,선수1 픽	Always - Yogurting OST (song by Shin ji) V2	Expert	https://beatsaver.com/maps/2a7c7
+주니어	3경기	KASAI HARCORES - Trinity Homerun	Normal	https://beatsaver.com/maps/29d32
+주니어	3경기,선수2 픽	At God's Mercy (short var.) (v2)	Expert	https://beatsaver.com/maps/3b0a
+주니어	3경기	Say (All I Need) - OneRepublic	Hard	https://beatsaver.com/maps/2a669
+주니어	3경기	[Chroma] DECO*27 - Journey feat. Hatsune Miku	Normal	https://beatsaver.com/maps/2a793
+name: kbsl3_junior_round_3.json
+title: KBSL3 Junior Round 3
+cover: D:\Game\beatsaber\backup\Beat Saber\Playlists\CoverImages\junior_3.png

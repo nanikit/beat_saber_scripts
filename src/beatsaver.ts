@@ -44,7 +44,7 @@ export type BeatsaverMap = {
       nps: number;
       length: number;
       characteristic: string;
-      difficulty: string;
+      difficulty: BeatsaverDifficulty;
       events: number;
       chroma: boolean;
       me: boolean;
@@ -66,6 +66,8 @@ export type BeatsaverMap = {
   updatedAt: string;
   lastPublishedAt: string;
 };
+
+export type BeatsaverDifficulty = "Easy" | "Normal" | "Hard" | "Expert" | "ExpertPlus";
 
 export const getMapFromHash = async (hash: string): Promise<BeatsaverMap> => {
   const response = await fetch(`https://beatsaver.com/api/maps/hash/${hash}`);
