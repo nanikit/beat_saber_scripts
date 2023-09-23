@@ -50,10 +50,7 @@ async function main() {
       break;
     }
 
-    const records = await findPlayerMapRecord(mapId, {
-      id,
-      name: beatleader?.name ?? scoresaber?.name ?? "",
-    });
+    const records = await findPlayerMapRecord(mapId, { beatleader, scoresaber });
     if (records.length === 0) {
       _internals.log("No record found.");
       continue;
@@ -67,13 +64,21 @@ async function main() {
 
 async function findPlayerMapRecord(
   mapId: string,
-  player: { id: string; name: string },
+  { beatleader, scoresaber }: {
+    beatleader?: { id: string; name: string } | null;
+    scoresaber?: { id: string; name: string } | null;
+  },
 ) {
+  const normalizedId = mapId.trim().toLowerCase();
+  if (!normalizedId.match(/^[a-f0-9]{1,6}$/)) {
+    return ['Invalid id. Please enter map id like "25629" or "b2e".'];
+  }
+
   const [blScores, ssScores] = await Promise.all([
-    searchBeatleaderScores(player.id, mapId),
-    searchScoresaber(mapId, player),
+    ...(beatleader ? [searchBeatleaderScores(beatleader.id, normalizedId)] : []),
+    ...(scoresaber ? [searchScoresaber(normalizedId, scoresaber)] : []),
   ]);
-  const records = blScores.concat(ssScores).map((x) =>
+  const records = blScores.concat(ssScores ?? []).map((x) =>
     `[${x.time.toISOString()}] ${x.source} ${x.title} ${x.link}`
   );
 
@@ -103,7 +108,7 @@ async function searchScoresaber(
       getScoresaberScore(hash, { search: player.name, difficulty: ordinal })
     ),
   );
-  const ssScores = ssPages.flatMap((x) => x.scores).filter((x) =>
+  const ssScores = ssPages.flatMap((x) => "scores" in x ? x.scores : []).filter((x) =>
     x.leaderboardPlayerInfo.id === player.id
   );
 
@@ -117,10 +122,19 @@ async function searchScoresaber(
 
 async function queryPlayer(playerId: string) {
   const [beatleader, scoresaber] = await Promise.all([
-    _internals.getBeatleaderPlayer(playerId),
+    getValidBeatleaderPlayer(playerId),
     _internals.getScoresaberPlayer(playerId),
   ]);
   return { beatleader, scoresaber };
+}
+
+async function getValidBeatleaderPlayer(id: string) {
+  try {
+    await getBeatleaderScore(id, { search: "" });
+    return _internals.getBeatleaderPlayer(id);
+  } catch (_error) {
+    return null;
+  }
 }
 
 function beatsaverDiffToScoreSaberOrdinal(difficulty: BeatsaverDifficulty) {
@@ -158,11 +172,11 @@ Deno.test("When input not exist player ID", async (test) => {
 });
 
 Deno.test("Given valid player and beatmap ID", { sanitizeOps: false }, async (test) => {
-  const playerId = "76561198159100356";
+  const player = { id: "76561198159100356", name: "nanikit" };
   const mapId = "25629";
 
   await test.step("when query record", async (test) => {
-    const records = await findPlayerMapRecord(mapId, { id: playerId, name: "nanikit" });
+    const records = await findPlayerMapRecord(mapId, { beatleader: player, scoresaber: player });
 
     await test.step("it should return play records if exists", () => {
       assertEquals(records.length, 2);

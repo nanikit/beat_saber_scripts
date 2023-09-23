@@ -3,13 +3,13 @@ import { assertEquals } from "../src/test_deps.ts";
 
 export function getBeatleaderPlayer(
   id: string,
-): Promise<{ name: string } | null> {
+): Promise<{ id: string; name: string } | null> {
   return getJsonOrNull(`https://api.beatleader.xyz/player/${id}`);
 }
 
 export function getScoresaberPlayer(
   id: string,
-): Promise<{ name: string } | null> {
+): Promise<{ id: string; name: string } | null> {
   return getJsonOrNull(`https://scoresaber.com/api/player/${id}/full`);
 }
 
@@ -24,15 +24,17 @@ export function getBeatleaderScore(
   ).json();
 }
 
-export function getScoresaberScore(
+export async function getScoresaberScore(
   hash: string,
   { difficulty, search, page }: { difficulty: 1 | 3 | 5 | 7 | 9; search?: string; page?: number },
-): Promise<ScoresaberScorePage> {
-  return ky.get(
+): Promise<ScoresaberScorePage | { errorMessage: string }> {
+  const response = await ky.get(
     `https://scoresaber.com/api/leaderboard/by-hash/${hash}/scores?difficulty=${difficulty}&page=${
       page ?? 1
     }&search=${search}`,
-  ).json();
+    { throwHttpErrors: false },
+  );
+  return response.json();
 }
 
 async function getJsonOrNull<T>(url: string): Promise<T | null> {
