@@ -9,6 +9,8 @@ import {
 } from "../src/leaderboard_api.ts";
 import { assertEquals, assertSpyCall, returnsNext, stub } from "../src/test_deps.ts";
 
+type SearchResult = PlayRecord[] | { error: string };
+
 type PlayRecord = {
   source: "BL" | "SS";
   time: dayjs.Dayjs;
@@ -75,19 +77,27 @@ async function findPlayerMapRecord(
   }
 
   const song = await _internals.getDetailFromId(mapId);
-  const [blScores, ssScores] = await Promise.all([
-    ...(beatleader ? [searchBeatleaderScores(beatleader.id, normalizedId)] : []),
-    ...(scoresaber ? [searchScoresaber(song, scoresaber)] : []),
+  const results = await Promise.all([
+    ...(beatleader
+      ? [searchBeatleaderScores(beatleader.id, normalizedId).then(formatSearchResult)]
+      : []),
+    ...(scoresaber ? [searchScoresaber(song, scoresaber).then(formatSearchResult)] : []),
   ]);
   const { songName, songAuthorName, levelAuthorName } = song.metadata;
-  const records = [
+  const lines = [
     `Map: ${songName} - ${songAuthorName} (${levelAuthorName})`,
-    ...[...blScores, ...ssScores].map((x) =>
-      `[${x.time.toISOString()}] ${x.source} ${x.title} ${x.link}`
-    ),
+    ...results,
   ];
 
-  return records;
+  return lines;
+}
+
+function formatSearchResult(result: SearchResult) {
+  if ("error" in result) {
+    return result.error;
+  }
+
+  return result.map((x) => `[${x.time.toISOString()}] ${x.source} ${x.title} ${x.link}`).join("\n");
 }
 
 async function searchBeatleaderScores(playerId: string, mapId: string): Promise<PlayRecord[]> {
@@ -104,7 +114,7 @@ async function searchBeatleaderScores(playerId: string, mapId: string): Promise<
 async function searchScoresaber(
   song: BeatsaverMap,
   player: { id: string; name: string },
-): Promise<PlayRecord[]> {
+): Promise<SearchResult> {
   const { hash, diffs } = song.versions[0];
   const ordinals = diffs.map((x) => beatsaverDiffToScoreSaberOrdinal(x.difficulty));
   const ssPages = await Promise.all(
@@ -112,6 +122,12 @@ async function searchScoresaber(
       getScoresaberScore(hash, { search: player.name, difficulty: ordinal })
     ),
   );
+
+  const error = ssPages.find((x) => "errorMessage" in x);
+  if (error && "errorMessage" in error) {
+    return { error: error.errorMessage };
+  }
+
   const ssScores = ssPages.flatMap((x) => "scores" in x ? x.scores : []).filter((x) =>
     x.leaderboardPlayerInfo.id === player.id
   );
