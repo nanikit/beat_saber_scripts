@@ -20,7 +20,7 @@ export function getBeatleaderScore(
   return ky.get(
     `https://api.beatleader.xyz/player/${playerId}/scores?page=${
       page ?? 1
-    }&sortBy=date&order=desc&search=${search ?? ""}`,
+    }&sortBy=date&order=desc&search=${search ?? ""}&count=50`,
   ).json();
 }
 

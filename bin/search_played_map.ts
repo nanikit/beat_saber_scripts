@@ -59,8 +59,12 @@ async function main() {
       break;
     }
 
-    const records = await findPlayerMapRecord(mapId, { beatleader, scoresaber });
-    _internals.log(records.join("\n"));
+    try {
+      const records = await findPlayerMapRecord(mapId, { beatleader, scoresaber });
+      _internals.log(records.join("\n"));
+    } catch (error) {
+      _internals.log(error.message);
+    }
   }
 }
 
@@ -78,9 +82,7 @@ async function findPlayerMapRecord(
 
   const song = await _internals.getDetailFromId(mapId);
   const results = await Promise.all([
-    ...(beatleader
-      ? [searchBeatleaderScores(beatleader.id, normalizedId).then(formatSearchResult)]
-      : []),
+    ...(beatleader ? [searchBeatleaderScores(beatleader.id, song).then(formatSearchResult)] : []),
     ...(scoresaber ? [searchScoresaber(song, scoresaber).then(formatSearchResult)] : []),
   ]);
   const { songName, songAuthorName, levelAuthorName } = song.metadata;
@@ -100,9 +102,12 @@ function formatSearchResult(result: SearchResult) {
   return result.map((x) => `[${x.time.toISOString()}] ${x.source} ${x.title} ${x.link}`).join("\n");
 }
 
-async function searchBeatleaderScores(playerId: string, mapId: string): Promise<PlayRecord[]> {
-  const blScores = await _internals.getBeatleaderScore(playerId, { search: mapId });
-  const exactScores = blScores?.data.filter((x) => x.leaderboard.song.id === mapId) ?? [];
+async function searchBeatleaderScores(playerId: string, song: BeatsaverMap): Promise<PlayRecord[]> {
+  const blScores = await _internals.getBeatleaderScore(playerId, {
+    search: song.metadata.songName,
+  });
+  const exactScores =
+    blScores?.data.filter((x) => x.leaderboard.song.hash === song.versions[0].hash) ?? [];
   return exactScores.map((x) => ({
     source: "BL",
     time: dayjs(Number(x.timeset) * 1000),
