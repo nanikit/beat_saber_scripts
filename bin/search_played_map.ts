@@ -1,13 +1,12 @@
-import dayjs from "npm:dayjs";
-import relativeTime from "npm:dayjs/plugin/relativeTime.js";
 import { uniqueBy } from "npm:remeda";
-import { BeatsaverDifficulty, BeatsaverMap, getDetailFromId } from "../src/beatsaver.ts";
+import { BeatsaverMap, getDetailFromId } from "../src/beatsaver.ts";
 import {
   BeatleaderScore,
   getBeatleaderPlayer,
   getBeatleaderScore,
   getScoresaberPlayer,
   getScoresaberScore,
+  ScoresaberPlayerScore,
 } from "../src/leaderboard_api.ts";
 import { assertEquals, assertSpyCall, returnsNext, stub } from "../src/test_deps.ts";
 
@@ -15,12 +14,10 @@ type SearchResult = PlayRecord[] | { error: string };
 
 type PlayRecord = {
   source: "BL" | "SS";
-  time: dayjs.Dayjs;
+  time: Temporal.Instant;
   title: string;
   link: string;
 };
-
-dayjs.extend(relativeTime);
 
 const _internals = {
   getBeatleaderPlayer,
@@ -85,7 +82,7 @@ async function findPlayerMapRecord(
   const song = await _internals.getDetailFromId(mapId);
   const results = await Promise.all([
     ...(beatleader ? [searchBeatleaderScores(beatleader.id, song).then(formatSearchResult)] : []),
-    ...(scoresaber ? [searchScoresaber(song, scoresaber).then(formatSearchResult)] : []),
+    ...(scoresaber ? [searchScoresaber(scoresaber.id, song).then(formatSearchResult)] : []),
   ]);
   const { songName, songAuthorName, levelAuthorName } = song.metadata;
   const lines = [
@@ -101,31 +98,31 @@ function formatSearchResult(result: SearchResult) {
     return result.error;
   }
 
-  return result.map((x) => `[${x.time.toISOString()}] ${x.source} ${x.title} ${x.link}`).join("\n");
+  return result.map((x) => `[${x.time}] ${x.source} ${x.title} ${x.link}`).join("\n");
 }
 
 async function searchBeatleaderScores(playerId: string, song: BeatsaverMap): Promise<PlayRecord[]> {
   const { songName, songAuthorName, levelAuthorName } = song.metadata;
-  const blScores = await _internals.getBeatleaderScore(playerId, { search: songName });
+  const scores = await _internals.getBeatleaderScore(playerId, { search: songName });
 
-  const sameHash = blScores.data.filter((x) => x.leaderboard.song.hash === song.versions[0].hash);
-  const sameMapper = blScores.data.filter((x) => x.leaderboard.song.mapper === levelAuthorName);
-  const sameSong = blScores.data.filter((x) =>
+  const sameHash = scores.data.filter((x) => x.leaderboard.song.hash === song.versions[0].hash);
+  const sameMapper = scores.data.filter((x) => x.leaderboard.song.mapper === levelAuthorName);
+  const sameSong = scores.data.filter((x) =>
     x.leaderboard.song.name === songName &&
     x.leaderboard.song.author === songAuthorName
   );
 
   return uniqueBy([
-    ...sameHash.map((x) => toPlayRecord("exact match", x)),
-    ...sameMapper.map((x) => toPlayRecord("same mapper", x)),
-    ...sameSong.map((x) => toPlayRecord("same song", x)),
+    ...sameHash.map((x) => toBeatleaderPlayRecord("exact match", x)),
+    ...sameMapper.map((x) => toBeatleaderPlayRecord("same mapper", x)),
+    ...sameSong.map((x) => toBeatleaderPlayRecord("same song", x)),
   ], (x) => x.link);
 }
 
-function toPlayRecord(tag: string, score: BeatleaderScore) {
+function toBeatleaderPlayRecord(tag: string, score: BeatleaderScore) {
   return {
     source: "BL" as const,
-    time: dayjs(Number(score.timeset) * 1000),
+    time: Temporal.Instant.fromEpochSeconds(Number(score.timeset)),
     title: `${score.leaderboard.song.name} ${tag}`,
     link: `https://www.beatleader.xyz/leaderboard/global/${score.leaderboardId}/${
       Math.ceil(score.rank / 10)
@@ -133,33 +130,47 @@ function toPlayRecord(tag: string, score: BeatleaderScore) {
   };
 }
 
-async function searchScoresaber(
-  song: BeatsaverMap,
-  player: { id: string; name: string },
-): Promise<SearchResult> {
-  const { hash, diffs } = song.versions[0];
-  const ordinals = diffs.map((x) => beatsaverDiffToScoreSaberOrdinal(x.difficulty));
-  const ssPages = await Promise.all(
-    ordinals.map((ordinal) =>
-      getScoresaberScore(hash, { search: player.name, difficulty: ordinal })
-    ),
-  );
-
-  const error = ssPages.find((x) => "errorMessage" in x);
-  if (error && "errorMessage" in error) {
-    return { error: error.errorMessage };
+async function searchScoresaber(playerId: string, song: BeatsaverMap): Promise<SearchResult> {
+  const scores: ScoresaberPlayerScore[] = [];
+  while (true) {
+    const page = await getScoresaberScore(playerId, { search: song.metadata.songName, page: 1 });
+    if ("errorMessage" in page) {
+      if (scores.length) {
+        break;
+      } else {
+        return { error: page.errorMessage };
+      }
+    }
+    scores.push(...page.playerScores);
+    if (page.playerScores.length < 8) {
+      break;
+    }
   }
 
-  const ssScores = ssPages.flatMap((x) => "scores" in x ? x.scores : []).filter((x) =>
-    x.leaderboardPlayerInfo.id === player.id
+  const { songName, songAuthorName, levelAuthorName } = song.metadata;
+  const sameHash = scores.filter((x) => x.leaderboard.songHash === song.versions[0].hash);
+  const sameMapper = scores.filter((x) => x.leaderboard.levelAuthorName === levelAuthorName);
+  const sameSong = scores.filter((x) =>
+    x.leaderboard.songName === songName &&
+    x.leaderboard.songAuthorName === songAuthorName
   );
 
-  return ssScores.map((x) => ({
-    source: "SS",
-    time: dayjs(x.timeSet),
-    title: song.metadata.songName,
-    link: `https://scoresaber.com/leaderboard/${0}?search=${player.name}`,
-  }));
+  return uniqueBy([
+    ...sameHash.map((x) => toScoresaberPlayRecord("exact match", x)),
+    ...sameMapper.map((x) => toScoresaberPlayRecord("same mapper", x)),
+    ...sameSong.map((x) => toScoresaberPlayRecord("same song", x)),
+  ], (x) => x.title);
+
+  function toScoresaberPlayRecord(tag: string, score: ScoresaberPlayerScore): PlayRecord {
+    return {
+      source: "SS",
+      time: Temporal.Instant.from(score.score.timeSet),
+      title: `${score.leaderboard.songName} ${tag}`,
+      link: `https://scoresaber.com/api/player/${playerId}/scores?page=1&search=${
+        encodeURIComponent(songName)
+      }&sort=recent`,
+    };
+  }
 }
 
 async function queryPlayer(playerId: string) {
@@ -177,16 +188,6 @@ async function getValidBeatleaderPlayer(id: string) {
   } catch (_error) {
     return null;
   }
-}
-
-function beatsaverDiffToScoreSaberOrdinal(difficulty: BeatsaverDifficulty) {
-  return ({
-    Easy: 1,
-    Normal: 3,
-    Hard: 5,
-    Expert: 7,
-    ExpertPlus: 9,
-  } as const)[difficulty] ?? 9;
 }
 
 Deno.test("When input not exist player ID", async (test) => {

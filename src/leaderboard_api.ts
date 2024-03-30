@@ -25,15 +25,13 @@ export function getBeatleaderScore(
 }
 
 export async function getScoresaberScore(
-  hash: string,
-  { difficulty, search, page }: { difficulty: 1 | 3 | 5 | 7 | 9; search?: string; page?: number },
-): Promise<ScoresaberScorePage | { errorMessage: string }> {
-  const response = await ky.get(
-    `https://scoresaber.com/api/leaderboard/by-hash/${hash}/scores?difficulty=${difficulty}&page=${
-      page ?? 1
-    }&search=${search}`,
-    { throwHttpErrors: false },
-  );
+  playerId: string,
+  { search, page }: { search?: string; page: number },
+): Promise<ScoresaberPagedPlayerScore | { errorMessage: string }> {
+  const response = await ky.get(`https://scoresaber.com/api/player/${playerId}/scores`, {
+    searchParams: { page: page ?? 1, search: search ?? "", sort: "recent" },
+    throwHttpErrors: false,
+  });
   return response.json();
 }
 
@@ -429,54 +427,8 @@ type BeatleaderSong = {
   }[];
 };
 
-type ScoresaberScorePage = {
-  scores: [
-    {
-      /** @example 70550916 */
-      id: number;
-      leaderboardPlayerInfo: {
-        /** @example 76561198159100356 */
-        id: string;
-        /** @example nanikit */
-        name: string;
-        /** @example https://cdn.scoresaber.com/avatars/76561198159100356.jpg */
-        profilePicture: string;
-        /** @example KR */
-        country: string;
-        /** @example 0 */
-        permissions: number;
-        /** @example  */
-        badges: string;
-        role: null;
-      };
-      /** @example 1 */
-      rank: number;
-      /** @example 1209867 */
-      baseScore: number;
-      /** @example 1209867 */
-      modifiedScore: number;
-      /** @example 0 */
-      pp: number;
-      /** @example 5.464939086767392e-9 */
-      weight: number;
-      /** @example  */
-      modifiers: string;
-      /** @example 1 */
-      multiplier: number;
-      /** @example 0 */
-      badCuts: number;
-      /** @example 0 */
-      missedNotes: number;
-      /** @example 1379 */
-      maxCombo: number;
-      fullCombo: boolean;
-      /** @example 32 */
-      hmd: number;
-      /** @example 2023-09-09T18:15:53.000Z */
-      timeSet: string;
-      hasReplay: boolean;
-    },
-  ];
+type ScoresaberPagedPlayerScore = {
+  playerScores: ScoresaberPlayerScore[];
   metadata: {
     /** @example 1 */
     total: number;
@@ -484,5 +436,86 @@ type ScoresaberScorePage = {
     page: number;
     /** @example 12 */
     itemsPerPage: number;
+  };
+};
+
+export type ScoresaberPlayerScore = {
+  score: {
+    /** @example 70550916 */
+    id: number;
+    leaderboardPlayerInfo: null;
+    /** @example 1 */
+    rank: number;
+    /** @example 1209867 */
+    baseScore: number;
+    /** @example 1209867 */
+    modifiedScore: number;
+    /** @example 0 */
+    pp: number;
+    /** @example 5.464939086767392e-9 */
+    weight: number;
+    modifiers: string;
+    /** @example 1 */
+    multiplier: number;
+    /** @example 0 */
+    badCuts: number;
+    /** @example 0 */
+    missedNotes: number;
+    /** @example 1379 */
+    maxCombo: number;
+    fullCombo: boolean;
+    /** @example 32 */
+    hmd: number;
+    timeSet: string;
+    hasReplay: boolean;
+    deviceHmd: string | null;
+    deviceControllerLeft: string | null;
+    deviceControllerRight: string | null;
+  };
+  leaderboard: {
+    /** @example 358b391 */
+    id: number;
+    /** @example de09d641463dcc5031a4b271b87c3ef84eca8da0 */
+    songHash: string;
+    /** @example Kyu-Kurarin */
+    songName: string;
+    /** @example (yuigot Remix) */
+    songSubName: string;
+    /** @example Iyowa */
+    songAuthorName: string;
+    /** @example Ken_Monogatari */
+    levelAuthorName: string;
+    difficulty: {
+      /** @example 942807 */
+      leaderboardId: number;
+      /** @example 9 */
+      difficulty: number;
+      /** @example ExpertPlus */
+      gameMode: string;
+      /** @example Standard */
+      difficultyRaw: string;
+    };
+    /** @example 857315 */
+    maxScore: number;
+    createdDate: string;
+    rankedDate: string | null;
+    qualifiedDate: string | null;
+    lovedDate: string | null;
+    ranked: boolean;
+    qualified: boolean;
+    loved: boolean;
+    /** @example 0 */
+    maxPP: number;
+    /** @example 0.9765202 */
+    stars: number;
+    /** @example 0 */
+    plays: number;
+    /** @example 0 */
+    dailyPlays: number;
+    positiveModifiers: boolean;
+    playerScore: null;
+    /** @example https://na.cdn.beatsaver.com/de09d641463dcc5031a4b271b87c3ef84eca8da0.jpg */
+    coverImage: string;
+    difficulties: null;
   };
 };
