@@ -20,7 +20,7 @@ export function getBeatleaderScore(
   return ky.get(
     `https://api.beatleader.xyz/player/${playerId}/scores?page=${
       page ?? 1
-    }&sortBy=date&order=desc&search=${search ?? ""}&count=50`,
+    }&sortBy=date&order=desc&search=${encodeURIComponent(search ?? "")}&count=50`,
   ).json();
 }
 
@@ -106,95 +106,9 @@ type BeatleaderScorePage = {
   data: BeatleaderScore[];
 };
 
-type BeatleaderScore = {
+export type BeatleaderScore = {
   myScore: null;
-  leaderboard: {
-    /** @example 358b391 */
-    id: string;
-    song: BeatleaderSong;
-    difficulty: {
-      /** @example 942807 */
-      id: number;
-      /** @example 9 */
-      value: number;
-      /** @example 1 */
-      mode: number;
-      /** @example ExpertPlus */
-      difficultyName: string;
-      /** @example Standard */
-      modeName: string;
-      /** @example 0 */
-      status: number;
-      modifierValues: {
-        /** @example 736729 */
-        modifierId: number;
-        /** @example 0 */
-        da: number;
-        /** @example 0.2 */
-        fs: number;
-        /** @example 0.36 */
-        sf: number;
-        /** @example -0.3 */
-        ss: number;
-        /** @example 0.04 */
-        gn: number;
-        /** @example -0.3 */
-        na: number;
-        /** @example -0.2 */
-        nb: number;
-        /** @example -0.5 */
-        nf: number;
-        /** @example -0.2 */
-        no: number;
-        /** @example 0 */
-        pm: number;
-        /** @example 0 */
-        sc: number;
-        /** @example 0 */
-        sa: number;
-        /** @example -0.5 */
-        op: number;
-      };
-      modifiersRating: null;
-      /** @example 0 */
-      nominatedTime: number;
-      /** @example 0 */
-      qualifiedTime: number;
-      /** @example 0 */
-      rankedTime: number;
-      stars: null;
-      /** @example 0.9765202 */
-      predictedAcc: number;
-      passRating: null;
-      accRating: null;
-      techRating: null;
-      /** @example 0 */
-      type: number;
-      /** @example 17 */
-      njs: number;
-      /** @example 5.028 */
-      nps: number;
-      /** @example 938 */
-      notes: number;
-      /** @example 305 */
-      bombs: number;
-      /** @example 128 */
-      walls: number;
-      /** @example 857315 */
-      maxScore: number;
-      /** @example 193 */
-      duration: number;
-      /** @example 32 */
-      requirements: number;
-    };
-    scores: null;
-    changes: null;
-    qualification: null;
-    reweight: null;
-    leaderboardGroup: null;
-    /** @example 0 */
-    plays: number;
-  };
+  leaderboard: BeatleaderLeaderBoard;
   /** @example 0 */
   weight: number;
   /** @example 109.054344 */
@@ -319,6 +233,94 @@ type BeatleaderScore = {
     /** @example 1143933 */
     pauses: number;
   };
+};
+
+type BeatleaderLeaderBoard = {
+  /** @example 358b391 */
+  id: string;
+  song: BeatleaderSong;
+  difficulty: {
+    /** @example 942807 */
+    id: number;
+    /** @example 9 */
+    value: number;
+    /** @example 1 */
+    mode: number;
+    /** @example ExpertPlus */
+    difficultyName: string;
+    /** @example Standard */
+    modeName: string;
+    /** @example 0 */
+    status: number;
+    modifierValues: {
+      /** @example 736729 */
+      modifierId: number;
+      /** @example 0 */
+      da: number;
+      /** @example 0.2 */
+      fs: number;
+      /** @example 0.36 */
+      sf: number;
+      /** @example -0.3 */
+      ss: number;
+      /** @example 0.04 */
+      gn: number;
+      /** @example -0.3 */
+      na: number;
+      /** @example -0.2 */
+      nb: number;
+      /** @example -0.5 */
+      nf: number;
+      /** @example -0.2 */
+      no: number;
+      /** @example 0 */
+      pm: number;
+      /** @example 0 */
+      sc: number;
+      /** @example 0 */
+      sa: number;
+      /** @example -0.5 */
+      op: number;
+    };
+    modifiersRating: null;
+    /** @example 0 */
+    nominatedTime: number;
+    /** @example 0 */
+    qualifiedTime: number;
+    /** @example 0 */
+    rankedTime: number;
+    stars: null;
+    /** @example 0.9765202 */
+    predictedAcc: number;
+    passRating: null;
+    accRating: null;
+    techRating: null;
+    /** @example 0 */
+    type: number;
+    /** @example 17 */
+    njs: number;
+    /** @example 5.028 */
+    nps: number;
+    /** @example 938 */
+    notes: number;
+    /** @example 305 */
+    bombs: number;
+    /** @example 128 */
+    walls: number;
+    /** @example 857315 */
+    maxScore: number;
+    /** @example 193 */
+    duration: number;
+    /** @example 32 */
+    requirements: number;
+  };
+  scores: null;
+  changes: null;
+  qualification: null;
+  reweight: null;
+  leaderboardGroup: null;
+  /** @example 0 */
+  plays: number;
 };
 
 type BeatleaderSong = {

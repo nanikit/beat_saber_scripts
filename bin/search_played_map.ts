@@ -1,7 +1,9 @@
 import dayjs from "npm:dayjs";
 import relativeTime from "npm:dayjs/plugin/relativeTime.js";
+import { uniqueBy } from "npm:remeda";
 import { BeatsaverDifficulty, BeatsaverMap, getDetailFromId } from "../src/beatsaver.ts";
 import {
+  BeatleaderScore,
   getBeatleaderPlayer,
   getBeatleaderScore,
   getScoresaberPlayer,
@@ -103,17 +105,32 @@ function formatSearchResult(result: SearchResult) {
 }
 
 async function searchBeatleaderScores(playerId: string, song: BeatsaverMap): Promise<PlayRecord[]> {
-  const blScores = await _internals.getBeatleaderScore(playerId, {
-    search: song.metadata.songName,
-  });
-  const exactScores =
-    blScores?.data.filter((x) => x.leaderboard.song.hash === song.versions[0].hash) ?? [];
-  return exactScores.map((x) => ({
-    source: "BL",
-    time: dayjs(Number(x.timeset) * 1000),
-    title: x.leaderboard.song.name,
-    link: `https://www.beatleader.xyz/leaderboard/global/${x.leaderboardId}`,
-  }));
+  const { songName, songAuthorName, levelAuthorName } = song.metadata;
+  const blScores = await _internals.getBeatleaderScore(playerId, { search: songName });
+
+  const sameHash = blScores.data.filter((x) => x.leaderboard.song.hash === song.versions[0].hash);
+  const sameMapper = blScores.data.filter((x) => x.leaderboard.song.mapper === levelAuthorName);
+  const sameSong = blScores.data.filter((x) =>
+    x.leaderboard.song.name === songName &&
+    x.leaderboard.song.author === songAuthorName
+  );
+
+  return uniqueBy([
+    ...sameHash.map((x) => toPlayRecord("exact match", x)),
+    ...sameMapper.map((x) => toPlayRecord("same mapper", x)),
+    ...sameSong.map((x) => toPlayRecord("same song", x)),
+  ], (x) => x.link);
+}
+
+function toPlayRecord(tag: string, score: BeatleaderScore) {
+  return {
+    source: "BL" as const,
+    time: dayjs(Number(score.timeset) * 1000),
+    title: `${score.leaderboard.song.name} ${tag}`,
+    link: `https://www.beatleader.xyz/leaderboard/global/${score.leaderboardId}/${
+      Math.ceil(score.rank / 10)
+    }`,
+  };
 }
 
 async function searchScoresaber(
