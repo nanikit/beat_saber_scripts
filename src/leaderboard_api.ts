@@ -1,5 +1,5 @@
 import ky from "npm:ky";
-import { assertEquals } from "../src/test_deps.ts";
+import { assert, assertEquals } from "../src/test_deps.ts";
 
 export function getBeatleaderPlayer(
   id: string,
@@ -29,11 +29,43 @@ export async function getScoresaberScore(
   { search, page }: { search?: string; page: number },
 ): Promise<ScoresaberPagedPlayerScore | { errorMessage: string }> {
   const response = await ky.get(`https://scoresaber.com/api/player/${playerId}/scores`, {
-    searchParams: { page: page ?? 1, search: search ?? "", sort: "recent" },
+    searchParams: {
+      page: page ?? 1,
+      search: followScoresaberSearchQueryLimit(search),
+      sort: "recent",
+    },
     throwHttpErrors: false,
   });
   return response.json();
 }
+
+// Why they determine by escaped string; sucks: They String must contain at most 32 character(s)
+function followScoresaberSearchQueryLimit(search?: string) {
+  if (!search) {
+    return "";
+  }
+
+  for (let i = Math.min(search.length, 32); i > 0; i--) {
+    const cut = search.slice(0, i);
+    const encoded = encodeURIComponent(cut);
+    if (encoded.length < 32) {
+      return cut;
+    }
+  }
+  return search;
+}
+
+Deno.test("Given cjk search string", async (test) => {
+  const search = "破壊前夜のこと";
+
+  await test.step("when follow search query limit", async (test) => {
+    const actual = followScoresaberSearchQueryLimit(search);
+
+    await test.step("it should preserve content", () => {
+      assert(search.startsWith(actual));
+    });
+  });
+});
 
 async function getJsonOrNull<T>(url: string): Promise<T | null> {
   const response = await ky.get(url, { throwHttpErrors: false });
