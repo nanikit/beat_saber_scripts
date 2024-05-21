@@ -1,6 +1,9 @@
 {
   "lock": false,
   "fmt": { "lineWidth": 100 },
+  "compilerOptions": {
+    "lib": ["deno.window"]
+  },
   "tasks": {
     "build": "deno compile --unstable-temporal -A bin/search_played_map.ts"
   }

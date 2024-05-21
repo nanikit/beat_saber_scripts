@@ -1,2 +1,3 @@
-/details
 /*.exe
+/tmp
+.env
