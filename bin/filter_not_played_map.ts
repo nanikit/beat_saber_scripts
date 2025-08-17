@@ -1,8 +1,8 @@
-import { pooledMap } from "https://deno.land/std@0.224.0/async/mod.ts";
-import { parseArgs } from "https://deno.land/std@0.224.0/cli/mod.ts";
-import { partition } from "https://deno.land/std@0.224.0/collections/mod.ts";
-import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 import { configSource } from "https://gist.githubusercontent.com/jeiea/73f585b2d1d568f6e53978ab435aaef3/raw/170037a93d71d62c9a83afcda32bbb0364286ac1/config_source.ts";
+import { pooledMap } from "jsr:@std/async@^1/pool";
+import { parseArgs } from "jsr:@std/cli@^1/parse-args";
+import { partition } from "jsr:@std/collections@^1/partition";
+import { load } from "jsr:@std/dotenv";
 import { arrayBufferToHex, getSha1FromLevels } from "../src/beatmap_hasher.ts";
 
 if (import.meta.main) {

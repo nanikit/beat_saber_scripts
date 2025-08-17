@@ -12,6 +12,19 @@
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
       "runtimeArgs": ["run", "--unstable-temporal", "--inspect-wait", "--allow-all"],
+      "envFile": "${workspaceFolder}/.env",
+      "attachSimplePort": 9229,
+      "console": "integratedTerminal"
+    },
+    {
+      "request": "launch",
+      "name": "Debug test",
+      "type": "node",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["test", "--unstable-temporal", "--inspect-wait", "--allow-all"],
+      "envFile": "${workspaceFolder}/.env",
       "attachSimplePort": 9229,
       "console": "integratedTerminal"
     }
