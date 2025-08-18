@@ -1,0 +1,28 @@
+{
+  "custom_level_DFD262775728017FD9E26261CA4BEDE1383C4884___3___Standard": [
+    {
+      "Date": 1754490063981,
+      "ModifiedScore": 590026,
+      "RawScore": 590026,
+      "LastNote": 722,
+      "Param": 2,
+      "MaxRawScore": 652395
+    },
+    {
+      "Date": 1754490233969,
+      "ModifiedScore": 759089,
+      "RawScore": 759089,
+      "LastNote": -1
+    }
+  ],
+  "custom_level_0D5355D0A16B71C2F47693E37EF3C6241FBEDEC3___3___Standard": [
+    {
+      "Date": 1754490596615,
+      "ModifiedScore": 244683,
+      "RawScore": 244683,
+      "LastNote": 358,
+      "Param": 2,
+      "MaxRawScore": 321195
+    }
+  ]
+}

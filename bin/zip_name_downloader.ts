@@ -9,12 +9,12 @@ const main = async () => {
 
   const idText = await Deno.readTextFile(Deno.args[0]);
 
-  for await (const errorOrFile of downloadAll(idText, { fetch })) {
+  for await (const errorOrFile of downloadAll(idText)) {
     if (errorOrFile instanceof Error) {
       console.error(errorOrFile);
     } else {
-      const { name, arrayBuffer } = errorOrFile;
-      await Deno.writeFile(name, new Uint8Array(arrayBuffer));
+      const { name, blob } = errorOrFile;
+      await Deno.writeFile(name, new Uint8Array(await blob.arrayBuffer()));
       console.log(`${name} save success`);
     }
   }

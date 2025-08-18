@@ -6,12 +6,7 @@ const getSafeFileName = (name: string) => {
   return name.replace(/[<>:"\/\\\|\?\*\x00-\x1f]/g, "_");
 };
 
-const downloadLatest = async (
-  id: string,
-  { fetch }: {
-    fetch: typeof self.fetch;
-  },
-): Promise<{ name: string; arrayBuffer: ArrayBuffer }> => {
+const downloadLatest = async (id: string): Promise<{ name: string; blob: Blob }> => {
   const json = await getDetailFromId(id);
   const { metadata, versions } = json;
   if (versions?.length !== 1) {
@@ -23,19 +18,14 @@ const downloadLatest = async (
   const { songName, levelAuthorName } = metadata;
   let name = `${id} (${songName} - ${levelAuthorName}).zip`;
   name = getSafeFileName(name);
-  const arrayBuffer = await response.arrayBuffer();
+  const blob = await response.blob();
 
-  return { name, arrayBuffer };
+  return { name, blob };
 };
 
 export async function* downloadAll(
   ids: string,
-  { fetch: realFetch }: {
-    fetch?: typeof self.fetch;
-  },
 ) {
-  const fetch = realFetch ?? self.fetch;
-
   const pattern = /^\s*?([0-9a-f]+)\b/gm;
   const extractedIds = [...ids.matchAll(pattern)].map(([, id]) => id);
 
@@ -43,7 +33,7 @@ export async function* downloadAll(
   let tasks = extractedIds.map((id) =>
     limiter(async () => {
       try {
-        return await downloadLatest(id, { fetch });
+        return await downloadLatest(id);
       } catch (error) {
         throw new Error(`id ${id} download failure`, { cause: error });
       }
