@@ -1,3 +1,6 @@
 /*.exe
 /tmp
 .env
+
+*.local
+*.local.*

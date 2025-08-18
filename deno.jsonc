@@ -4,6 +4,7 @@
   "compilerOptions": {
     "lib": ["deno.window"]
   },
+  "unstable": ["temporal"],
   "tasks": {
     "build": "deno compile --unstable-temporal -A bin/search_played_map.ts"
   }

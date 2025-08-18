@@ -1,3 +1,5 @@
+import { InfoDat } from "./info_dat.ts";
+
 export async function getSha1(files: Uint8Array[]) {
   const indices = files.reduce((acc, file) => {
     const last = acc.at(-1) ?? 0;
@@ -31,12 +33,24 @@ export function arrayBufferToHex(buffer: ArrayBuffer) {
 
 async function readFiles(info: Uint8Array, path: string) {
   const json = new TextDecoder().decode(info);
-  const data = JSON.parse(json) as {
-    _difficultyBeatmapSets: { _difficultyBeatmaps: { _beatmapFilename: string }[] }[];
-  };
-  const fileNames = data._difficultyBeatmapSets.flatMap((set) =>
-    set._difficultyBeatmaps.map((map) => map._beatmapFilename)
-  );
+  const data = JSON.parse(json) as InfoDat;
+  const fileNames = getDataFileNames(data);
+
   const files = await Promise.all(fileNames.map((name) => Deno.readFile(`${path}/${name}`)));
   return files;
+}
+
+function getDataFileNames(data: InfoDat) {
+  if ("_difficultyBeatmapSets" in data) {
+    return data._difficultyBeatmapSets.flatMap((set) =>
+      set._difficultyBeatmaps.map((map) => map._beatmapFilename)
+    );
+  } else {
+    return [
+      data.audio.audioDataFilename,
+      ...data.difficultyBeatmaps.flatMap((
+        map,
+      ) => [map.beatmapDataFilename, map.lightshowDataFilename]),
+    ];
+  }
 }
