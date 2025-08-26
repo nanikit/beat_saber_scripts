@@ -7,7 +7,7 @@ export async function getSha1(files: Uint8Array[]) {
     return acc;
   }, [0]);
   const joined = new Uint8Array(indices.at(-1) ?? 0);
-  indices.slice(0, -1).forEach((position, i) => joined.set(files[i], position));
+  indices.slice(0, -1).forEach((position, i) => joined.set(files[i]!, position));
   const sha1 = await crypto.subtle.digest("SHA-1", joined);
   return sha1;
 }

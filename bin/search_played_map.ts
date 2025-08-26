@@ -62,7 +62,7 @@ async function main() {
       const records = await findPlayerMapRecord(mapId, { beatleader, scoresaber });
       _internals.log(records.join("\n"));
     } catch (error) {
-      _internals.log(error.message);
+      _internals.log(error);
     }
   }
 }
@@ -105,7 +105,7 @@ async function searchBeatleaderScores(playerId: string, song: BeatsaverMap): Pro
   const { songName, songAuthorName, levelAuthorName } = song.metadata;
   const scores = await _internals.getBeatleaderScore(playerId, { search: songName });
 
-  const sameHash = scores.data.filter((x) => x.leaderboard.song.hash === song.versions[0].hash);
+  const sameHash = scores.data.filter((x) => x.leaderboard.song.hash === song.versions[0]!.hash);
   const sameMapper = scores.data.filter((x) => x.leaderboard.song.mapper === levelAuthorName);
   const sameSong = scores.data.filter((x) =>
     x.leaderboard.song.name === songName &&
@@ -148,7 +148,7 @@ async function searchScoresaber(playerId: string, song: BeatsaverMap): Promise<S
   }
 
   const { songName, songAuthorName, levelAuthorName } = song.metadata;
-  const sameHash = scores.filter((x) => x.leaderboard.songHash === song.versions[0].hash);
+  const sameHash = scores.filter((x) => x.leaderboard.songHash === song.versions[0]!.hash);
   const sameMapper = scores.filter((x) => x.leaderboard.levelAuthorName === levelAuthorName);
   const sameSong = scores.filter((x) =>
     x.leaderboard.songName === songName &&

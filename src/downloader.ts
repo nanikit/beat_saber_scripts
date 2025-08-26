@@ -13,7 +13,7 @@ const downloadLatest = async (id: string): Promise<{ name: string; blob: Blob }>
     throw new Error(`${id} has not sole version: ${JSON.stringify(json)}`);
   }
 
-  const url = versions![0].downloadURL;
+  const url = versions[0]!.downloadURL;
   const response = await fetch(url);
   const { songName, levelAuthorName } = metadata;
   let name = `${id} (${songName} - ${levelAuthorName}).zip`;
@@ -33,7 +33,7 @@ export async function* downloadAll(
   let tasks = extractedIds.map((id) =>
     limiter(async () => {
       try {
-        return await downloadLatest(id);
+        return await downloadLatest(id!);
       } catch (error) {
         throw new Error(`id ${id} download failure`, { cause: error });
       }
@@ -41,12 +41,12 @@ export async function* downloadAll(
   );
 
   while (tasks.length > 0) {
-    let completePromise: ReturnType<typeof downloadLatest>;
+    let completePromise: ReturnType<typeof downloadLatest> | undefined;
     try {
       [completePromise] = await Promise.race(
         tasks.map((promise) => promise.then(() => [promise], () => [promise])),
       );
-      yield completePromise;
+      yield completePromise!;
     } catch (error) {
       yield error as Error;
     } finally {

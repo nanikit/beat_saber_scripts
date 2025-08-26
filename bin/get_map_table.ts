@@ -44,7 +44,7 @@ async function main() {
       const details = await findDetails(rows.map((row) => row.id));
       const [table, list] = getPlaylist(
         rows.map((r, index) => ({
-          detail: details[index],
+          detail: details[index]!,
           difficulty: r.difficulty,
         })),
       );
@@ -55,7 +55,7 @@ async function main() {
         cover = undefined;
       }
       await Deno.writeTextFile(
-        fileName ?? `kbsl3_${rows[0].kind}.json`,
+        fileName ?? `kbsl3_${rows[0]!.kind}.json`,
         JSON.stringify(list, null, 2),
       );
       fileName = undefined;
@@ -64,9 +64,9 @@ async function main() {
       await Deno.writeTextFile(tableFile, `${text}\n\n${table}`);
       rows.splice(0, rows.length);
     }
-    previousKind = kind;
-    const id = (url as string).match(/\/(\w+)$/)![1];
-    rows.push({ id, difficulty, kind });
+    previousKind = kind ?? "";
+    const id = (url as string).match(/\/(\w+)$/)![1]!;
+    rows.push({ id, difficulty, kind: kind ?? "" });
   }
 
   console.log("finish");
@@ -97,7 +97,7 @@ function getPlaylist(maps: { detail: BeatsaverMap; difficulty?: string }[]) {
       detail.metadata.songName,
       detail.metadata.songAuthorName,
       detail.metadata.levelAuthorName,
-      maps[index].difficulty,
+      maps[index]!.difficulty,
       `[${detail.id}](https://beatsaver.com/maps/${detail.id})`,
       `[미리보기](https://skystudioapps.com/bs-viewer/?id=${detail.id})`,
     ].join(" | ")
@@ -115,8 +115,8 @@ function getPlaylist(maps: { detail: BeatsaverMap; difficulty?: string }[]) {
       songs: maps.map(({ detail, difficulty }) => ({
         songName: detail.metadata.songName,
         levelAuthorName: detail.metadata.levelAuthorName,
-        hash: detail.versions[0].hash,
-        levelid: `custom_level_${detail.versions[0].hash}`,
+        hash: detail.versions[0]!.hash,
+        levelid: `custom_level_${detail.versions[0]!.hash}`,
         difficulties: [
           {
             characteristic: "Standard",
