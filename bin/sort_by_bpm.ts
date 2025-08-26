@@ -2,7 +2,7 @@
  * Sorts Beat Saber levels by BPM and displays BPM and level name.
  */
 import { parseArgs } from "jsr:@std/cli@^1/parse-args";
-import { join } from "jsr:@std/path";
+import { join } from "jsr:@std/path@^1";
 import { InfoDat, isV2OrV3 } from "../src/info_dat.ts";
 
 main();

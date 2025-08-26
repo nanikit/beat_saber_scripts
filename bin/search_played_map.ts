@@ -122,7 +122,7 @@ async function searchBeatleaderScores(playerId: string, song: BeatsaverMap): Pro
 function toBeatleaderPlayRecord(tag: string, score: BeatleaderScore) {
   return {
     source: "BL" as const,
-    time: Temporal.Instant.fromEpochSeconds(Number(score.timeset)),
+    time: Temporal.Instant.fromEpochMilliseconds(Number(score.timeset) * 1000),
     title: `${score.leaderboard.song.name} ${tag}`,
     link: `https://www.beatleader.xyz/leaderboard/global/${score.leaderboardId}/${
       Math.ceil(score.rank / 10)

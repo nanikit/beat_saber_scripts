@@ -1,6 +1,11 @@
 {
   "lock": false,
   "fmt": { "lineWidth": 100 },
+  "lint": {
+    "rules": {
+      "exclude": ["no-import-prefix"]
+    }
+  },
   "compilerOptions": {
     "noUncheckedIndexedAccess": true,
     "useUnknownInCatchVariables": true,
