@@ -1,13 +1,14 @@
 import { downloadAll } from "../src/downloader.ts";
 
 const main = async () => {
-  const paths = Deno.args;
+  const idPath = Deno.args[0];
 
-  if (paths.length === 0) {
+  if (!idPath) {
     console.log(`usage: deno run -A ${Deno.mainModule} <ids.txt>`);
+    return;
   }
 
-  const idText = await Deno.readTextFile(Deno.args[0]);
+  const idText = await Deno.readTextFile(idPath);
 
   for await (const errorOrFile of downloadAll(idText)) {
     if (errorOrFile instanceof Error) {
