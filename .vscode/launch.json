@@ -9,9 +9,10 @@
       "name": "Launch Program",
       "type": "node",
       "program": "${file}",
+      "args": ["tmp.local/ids.txt"],
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
-      "runtimeArgs": ["run", "--unstable-temporal", "--inspect-wait", "--allow-all"],
+      "runtimeArgs": ["run", "--inspect-wait", "--allow-all"],
       "envFile": "${workspaceFolder}/.env",
       "attachSimplePort": 9229,
       "console": "integratedTerminal"

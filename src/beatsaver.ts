@@ -69,12 +69,19 @@ export type BeatsaverMap = {
 
 export type BeatsaverDifficulty = "Easy" | "Normal" | "Hard" | "Expert" | "ExpertPlus";
 
-export const getMapFromHash = async (hash: string): Promise<BeatsaverMap> => {
-  const response = await fetch(`https://beatsaver.com/api/maps/hash/${hash}`);
+const baseUrl = "https://beatsaver.com/api/maps";
+
+export async function getMapFromHash(hash: string): Promise<BeatsaverMap> {
+  const response = await fetch(`${baseUrl}/hash/${hash}`);
   return response.json();
-};
+}
 
 export async function getDetailFromId(id: string): Promise<BeatsaverMap> {
-  const response = await fetch(`https://beatsaver.com/api/maps/id/${id}`);
+  const response = await fetch(`${baseUrl}/id/${id}`);
+  return response.json();
+}
+
+export async function getDetailFromIds(ids: string[]): Promise<Record<string, BeatsaverMap>> {
+  const response = await fetch(`${baseUrl}/ids/${ids.join(",")}`);
   return response.json();
 }
