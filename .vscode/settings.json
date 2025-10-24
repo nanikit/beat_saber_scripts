@@ -1,6 +1,7 @@
 {
   "deno.enable": true,
   "deno.lint": true,
+  "files.eol": "\n",
   "typescript.validate.enable": false,
   "javascript.validate.enable": false,
   "editor.codeActionsOnSave": {
