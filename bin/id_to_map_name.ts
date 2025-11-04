@@ -16,7 +16,7 @@ async function main() {
   const idText = await Deno.readTextFile(filePath);
   const allIds = idText.replaceAll("\r", "").split("\n").filter((id) => id.trim() !== "");
 
-  using file = await Deno.open(`${filePath}.tsv`, { write: true, create: true, append: true });
+  using file = await Deno.open(`${filePath}.tsv`, { write: true, create: true, truncate: true });
   const encoder = new TextEncoderStream();
   encoder.readable.pipeTo(file.writable);
   const writer = encoder.writable.getWriter();
@@ -50,5 +50,9 @@ async function main() {
 
 function format(map: BeatsaverMap) {
   const { songName, songAuthorName, levelAuthorName } = map.metadata;
-  return `${map.id}\t${songName.trim()} - ${songAuthorName.trim()} (${levelAuthorName.trim()}\n`;
+  return [
+    `${map.id}`,
+    levelAuthorName.trim(),
+    `${songName.trim()} - ${songAuthorName.trim()}\n`,
+  ].join("\t");
 }
